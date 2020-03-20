@@ -18,13 +18,28 @@ import sys
   # get every combination of (1*(nums in range(var1)) + 2*(nums in range(var2)) + 3*(nums in range(var3))) where
   # that combination is equal to n 
   # after that get every possible order of each of those found combinations
-
-def eating_cookies(n):
-  if n<0:
+def eating_cookies(n, cache=None):
+  if cache==None:
+    cache = {}
+  elif n<0:
     return 0
   elif n==0:
-    return 1
-  return eating_cookies(n-1) + eating_cookies(n-2) + eating_cookies(n-3)
+    return 1 
+    
+  elif cache and cache[n]:
+    return cache[n]
+  else:
+    cache[n] = eating_cookies(n-1,cache) + eating_cookies(n-2,cache) + eating_cookies(n-3,cache)
+  return cache[n]
+
+# print(eating_cookies(50))
+
+# def eating_cookies(n):
+#   if n<0:
+#     return 0
+#   elif n==0:
+#     return 1
+#   return eating_cookies(n-1) + eating_cookies(n-2) + eating_cookies(n-3), cache
   # var1 = n # bc n//1 is the same as just n
   # var2 = n//2
   # var3 = n//3
